@@ -46,7 +46,7 @@ HTTP 设计者早早的考虑到了这点，因此 HTTP 协议的头部有不少
 
 一个资源可能由于迁移、维护等原因从 url1 转到了 url2，而客户端不知情，当客户端请求 url1 的时候服务器不能粗暴的返回错误，而是通过 **302** 响应码和 **Location** 头部告诉客户端资源已经迁移到 url2 了，于是客户端又要向 url2 发送请求获取资源。
 
-![](https://upload-images.jianshu.io/upload_images/858017-5c80e25c241cab26.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://raw.githubusercontent.com/YuanBLQ/picpool/main/302source.jpg)
 
 如果重定向次数很多，客户端就要发送和多次 HTTP 请求，如果客户端处在公网中，网络传输成本极高，降低了网络性能。
 
