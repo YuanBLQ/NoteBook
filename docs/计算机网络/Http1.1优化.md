@@ -24,7 +24,7 @@ HTTP 设计者早早的考虑到了这点，因此 HTTP 协议的头部有不少
 
 
 
-![](https://upload-images.jianshu.io/upload_images/858017-d9e4cff616e5d5bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://pages.isyuan.site/hnet/%E7%BC%93%E5%AD%98%E8%AE%BF%E9%97%AE.png)
 
 但缓存不可能一直是最新的数据，那怎么办呢？
 
@@ -32,7 +32,7 @@ HTTP 设计者早早的考虑到了这点，因此 HTTP 协议的头部有不少
 
 当再次发起请求时，客户端会从第一次请求到的响应头中取出已过期的缓存摘要 Etag 头部，放在这次请求的 Etag 头部发给服务器，服务器会跟本地的数据摘要作对比，如果没过期就会返回 **304 Not Modified，**响应体是空的，这样就能提高传输效率。
 
-![](https://upload-images.jianshu.io/upload_images/858017-3814789986fb5498.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://pages.isyuan.site/hnet/304%E5%A4%B4.png)
 
 ### 如何减少 HTTP 请求次数
 
@@ -46,17 +46,17 @@ HTTP 设计者早早的考虑到了这点，因此 HTTP 协议的头部有不少
 
 一个资源可能由于迁移、维护等原因从 url1 转到了 url2，而客户端不知情，当客户端请求 url1 的时候服务器不能粗暴的返回错误，而是通过 **302** 响应码和 **Location** 头部告诉客户端资源已经迁移到 url2 了，于是客户端又要向 url2 发送请求获取资源。
 
-![](https://raw.githubusercontent.com/YuanBLQ/picpool/main/302source.jpg)
+![](https://pages.isyuan.site/hnet/302source.jpg)
 
 如果重定向次数很多，客户端就要发送和多次 HTTP 请求，如果客户端处在公网中，网络传输成本极高，降低了网络性能。
 
 我们可以让代理服务器执行重定向，减少客户端与代理服务器之间的通讯次数。
 
-![](https://upload-images.jianshu.io/upload_images/858017-9dca12d525c6b28a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://pages.isyuan.site/hnet/302source2.png)
 
 更进一步，直接把重定向信息缓存到客户端，这样下次客户端直接请求 url2，中间不需要再有中转操作。
 
-![](https://upload-images.jianshu.io/upload_images/858017-fe620f008c18bfcc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://pages.isyuan.site/hnet/302source3.png)
 
 RFC 规范定义了 5 个重定向响应码，其中客户端收到 **301** 和 **308** 后都可以将重定向缓存到本地，之后客户端直接用 url2 代替 url1 请求资源。
 
